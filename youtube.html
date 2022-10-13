@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+      body{background-color: grey;}
+  </style>
   </head>
   <body>
     
@@ -27,30 +30,78 @@
                       <div>
                         <ul>
                             <ul class="nav flex-column">
-                                <li class="nav-item">
-                                  <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                              <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="twitter.html">Twitter</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="discord.html">Discord</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" href="spotify.html">Spotify</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="youtube.html">Youtube</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" href="twitter.html">Twitter</a>
+                                  <a class="nav-link" href="twitch.html">Twitch</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" href="discord.html">Discord</a>
+                                  <a class="nav-link" href="content.html">Clips</a>
                                 </li>
-                                <li class="nav-item">
-                                  <a class="nav-link" href="spotify.html">Spotify</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="youtube.html">Youtube</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="twitch.html">Twitch</a>
-                                  </li>
                               </ul>
                           </ul>
                       </div>
                     </div>
                   </div>
             </div>
+
+            <div class="col-md-9">
+              <div class="container-fluid">
+                  <div class="row align-items-start">
+                      <h1>Youtube</h1>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-3">
+                      <span>View Count</span>
+                      <h1 id="viewCount">200</h1>
+                    </div>
+                    <div class="col-md-3">
+                      <span>Sub Count</span>
+                      <h1 id="subCount">200</h1>
+                    </div>
+                     <div class="col-md-3">
+                      <span>Video Count</span>
+                      <h1 id="vidCount">200</h1>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div> <!-- end of page row-->
+        </div>  <!-- end of page conatiner-->
+           
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-  </body>
+            <script>
+              window.onload = (event) => {
+                const getData = () => fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,contentDetails&key=AIzaSyDbGEpv8mrJa1TjyxDv1qoXuXW8odwNm0Q&id=UCURKbz7_kmJzlnBDrbWzpew')
+                  .then((response) => response.json())
+                  .then((data) => {
+                    const stats = data.items[0].statistics
+                    console.log(stats)
+                    document.getElementById("viewCount").innerHTML = stats.viewCount;
+                    document.getElementById("subCount").innerHTML = stats.subscriberCount;
+                    document.getElementById("vidCount").innerHTML = stats.videoCount;
+                  })
+                
+                getData()
+
+                setInterval(() => getData(), 1000)
+              }
+          
+            </script>
+          </body>
 </html>
